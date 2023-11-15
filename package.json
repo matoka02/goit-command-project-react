@@ -1,7 +1,7 @@
 {
   "name": "react-homework-template",
   "version": "0.1.0",
-  "private": true,
+  "private": true, 
   "homepage": "https://matoka02.github.io/goit-command-project-react/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
