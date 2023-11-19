@@ -80,6 +80,46 @@ export const validateDailyCalories = values => {
   return errors;
 };
 
+export const validateCalculatorCalorie = values => {
+  const errors = {};
+  if (!values.height) {
+    errors.height = 'Required';
+  } else if (values.height > 300) {
+    errors.height = 'Height must be less than 300';
+  } else if (values.height < 100) {
+    errors.height = 'Height must be more than 100';
+  };
+
+  if (!values.age) {
+    errors.age = 'Required';
+  } else if (values.age > 99) {
+    errors.age = 'Invalid age. Age must be less than 100 years ';
+  } else if (values.age < 15) {
+    errors.age = 'Invalid age. Age must be more than 15 years ';
+  };
+
+  if (!values.weight) {
+    errors.weight = 'Required';
+  } else if (values.weight > 250) {
+    errors.weight = 'Invalid wight. Wight must be less than 250 kilogram ';
+  } else if (values.weight < 20) {
+    errors.weight = 'Invalid wight. Wight must be more than 20 kilogram ';
+  };
+
+  if (!values.desiredWeight) {
+    errors.desiredWeight = 'Required';
+  } else if (values.desiredWeight > 100) {
+    errors.desiredWeight = 'Invalid wight. Wight must be less than 100 kilogram ';
+  } else if (values.desiredWeight < 20) {
+    errors.desiredWeight = 'Invalid wight. Wight must be more than 20 kilogram ';
+  };
+  
+  if (!values.bloodType) {
+    errors.bloodType = 'Required';
+  }
+  return errors;
+};
+
 export const validateForLogin = values => {
   const errors = {};
   if (!values.email) {
