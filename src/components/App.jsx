@@ -1,16 +1,121 @@
+import { lazy, useEffect, Suspense } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, Route, Routes } from 'react-router-dom';
+
+import { useIsDesktop, useIsMobile, useIsTablet } from 'hooks/mediaQuery';
+import { selectSid, selectToken } from 'redux/auth/authSelectors';
+import { refreshUser } from 'redux/auth/authOperation';
+import { getCurrentUser } from 'redux/userData/userDataOperation';
+import bgForDesktop from 'assets/images/Img-desktop.png';
+import bgForTablet from 'assets/images/Img-tablet.png';
+import Loader from './Loader/Loader';
+import SharedLayout from './SharedLayout/SharedLayout';
+import { PublicRoute } from './PublicRoute/PublicRoute';
+import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+
+const MainPage = lazy(() => import('../Pages/MainPage/MainPage'));
+const RegisterPage = lazy(() =>
+  import('../Pages/RegistrationPage/RegistrationPage')
+);
+const LoginPage = lazy(() => import('../Pages/LoginPage/LoginPage'));
+const CalculatorPage = lazy(() =>
+  import('../Pages/CalculatorPage/CalculatorPage')
+);
+const DiaryPage = lazy(() => import('../Pages/DiaryPage/DiaryPage'));
+
 export const App = () => {
+  const dispatch = useDispatch();
+  const isDesktop = useIsDesktop();
+  const isTablet = useIsTablet();
+  const isMobile = useIsMobile();
+  const sid = useSelector(selectSid);
+  const isSignInUser = useSelector(selectToken);
+  const isLoggedInUser = useSelector(state => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    isSignInUser === '' && dispatch(refreshUser(sid));
+  }, [dispatch, isSignInUser, sid]);
+
+  useEffect(() => {
+    if (!isSignInUser && isDesktop) {
+      document.body.style.background = `url(${bgForDesktop}) no-repeat 108% 0px `;
+      document.body.style.height = '880px';
+    };
+    if (!isSignInUser && isTablet) {
+      document.body.style.background = `url(${bgForTablet}) no-repeat 100% 100% `;
+      document.body.style.height = '1024px';
+    };
+    if (isSignInUser) {
+      document.body.style = 'none';
+    };
+    if (isMobile) {
+      document.body.style = 'none';
+    };
+  }, [isDesktop, isMobile, isSignInUser, isTablet]);
+
+  useEffect(() => {
+    if (isLoggedInUser) {
+      dispatch(getCurrentUser());
+    }
+  }, [dispatch, isLoggedInUser]);
+
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path='/' element={<SharedLayout />}>
+          <Route
+            path='/'
+            element={
+              <PublicRoute redirectTo='/calculator' component={<MainPage />} />
+            }
+          />
+          <Route
+            path='/registration'
+            element={
+              <PublicRoute
+                redirectTo='/calculator'
+                component={<RegisterPage />}
+              />
+            }
+          />
+          <Route
+            path='/login'
+            element={
+              <PublicRoute redirectTo='/calculator' component={<LoginPage />} />
+            }
+          />
+          <Route
+            path='/calculator'
+            element={
+              <PrivateRoute redirectTo='/' component={<CalculatorPage />} />
+            }
+          />
+          <Route
+            path='/diary'
+            element={
+              <PrivateRoute redirectTo='/diary' component={<DiaryPage />} />
+            }
+          />
+        </Route>
+        <Route path='*' element={<Navigate to={'/'} />} />
+      </Routes>
+    </Suspense>
   );
 };
+
+// export const App = () => {
+//   return (
+//     <div
+//       style={{
+//         height: '100vh',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         fontSize: 40,
+//         color: '#010101'
+//       }}
+//     >
+//       React homework template
+//     </div>
+//   );
+// };
