@@ -129,7 +129,7 @@ export const BtnLosingWeight = styled.button`
   padding: 13px 25px;
 `;
 
-export const BtnTabletktopClose = styled.button`
+export const BtnTabletDesktopClose = styled.button`
   border: none;
   background: transparent;
   position: absolute;
