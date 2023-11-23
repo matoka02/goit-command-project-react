@@ -1,9 +1,21 @@
+import {
+  Btn,
+  BtnBox,
+  Item,
+  Svg,
+  TextGrams,
+  TextKcal,
+  Title,
+} from './DiaryProductsListItem.styled';
+import btnDeleteIcon from '../../assets/sprite.svg';
+import {
+  selectDateNow,
+  selectDayId,
+  selectDayIdSecond,
+  selectEatenProducts,
+} from 'redux/userData/userDataSelectors';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { selectDateNow, selectDayId, selectDayIdSecond, selectEatenProducts } from 'redux/userData/userDataSelectors';
 import { deleteProduct, getInfoDay } from 'redux/userData/userDataOperation';
-import btnDeleteIcon from 'assets/sprite.svg';
-import { Item, TextGrams, TextKcal, Title, BtnBox, Btn, Svg } from './DiaryProductsListItem.styled';
 
 const DiaryProductsListItem = () => {
   const products = useSelector(selectEatenProducts);
@@ -12,10 +24,10 @@ const DiaryProductsListItem = () => {
   const date = useSelector(selectDateNow);
   const dispatch = useDispatch();
 
-  const deleteProductHandler = evt => {
+  const deleteProductHandler = e => {
     const dataProduct = {
       dayId: daySummary ? daySummary : daySummarySecond,
-      eatenProductId: evt.currentTarget.id,
+      eatenProductId: e.currentTarget.id,
     };
     dispatch(deleteProduct(dataProduct));
     dispatch(getInfoDay({ date }));
@@ -25,23 +37,23 @@ const DiaryProductsListItem = () => {
     <>
       {products
         ? products?.map(({ id, title, weight, kcal }) => (
-          <Item key={id}>
-            <Title>{title.slice(0, 14) + '...'}</Title>
-            <TextGrams>{weight}g</TextGrams>
-            <TextKcal>{Math.ceil(kcal)}kcal</TextKcal>
-            <BtnBox>
-              <Btn
-                type="button"
-                id={id}
-                onClick={e => deleteProductHandler(e)}
-              >
-                <Svg>
-                  <use href={btnDeleteIcon + '#icon-btn-delete'}></use>
-                </Svg>
-              </Btn>
-            </BtnBox>
-          </Item>
-        ))
+            <Item key={id}>
+              <Title>{title.slice(0, 14) + '...'}</Title>
+              <TextGrams>{weight}g</TextGrams>
+              <TextKcal>{Math.ceil(kcal)}kcal</TextKcal>
+              <BtnBox>
+                <Btn
+                  type="button"
+                  id={id}
+                  onClick={e => deleteProductHandler(e)}
+                >
+                  <Svg>
+                    <use href={btnDeleteIcon + '#icon-btn-delete'}></use>
+                  </Svg>
+                </Btn>
+              </BtnBox>
+            </Item>
+          ))
         : null}
     </>
   );

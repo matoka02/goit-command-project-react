@@ -1,10 +1,6 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
+import axios from 'axios';
 import { setAuthHeader } from 'utility/auxiliaryFunctions';
-
-// const { REACT_APP_BASE_URL } = process.env;
-// axios.defaults.baseURL = REACT_APP_BASE_URL;
 
 axios.defaults.baseURL = 'https://slimmom-backend.goit.global';
 
@@ -12,14 +8,13 @@ export const calculateDailyRate = createAsyncThunk(
   '/daily-rate',
   async (data, thunkApi) => {
     try {
-      const resp = await axios.post('/daily-rate', data);
-      return resp.data;
+      const res = await axios.post('/daily-rate', data);
+      return res.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
   }
 );
-
 export const calculateDailyRateForSignUser = createAsyncThunk(
   '/daily-rate/userId',
   async ({ userId, dataUser }, thunkApi) => {
@@ -27,28 +22,25 @@ export const calculateDailyRateForSignUser = createAsyncThunk(
       const state = thunkApi.getState();
       const token = state.auth.token;
       setAuthHeader(token);
-      const resp = await axios.post(`/daily-rate/${userId}`, dataUser);
-      return resp.data;
+      const res = await axios.post(`/daily-rate/${userId}`, dataUser);
+      return res.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
   }
 );
 
-export const getCurrentUser = createAsyncThunk(
-  '/user',
-  async (_, thunkApi) => {
-    try {
-      const state = thunkApi.getState();
-      const token = state.auth.token;
-      setAuthHeader(token);
-      const { data } = await axios.get(`/user`);
-      return data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
-    }
+export const getCurrentUser = createAsyncThunk('/user', async (_, thunkApi) => {
+  try {
+    const state = thunkApi.getState();
+    const token = state.auth.token;
+    setAuthHeader(token);
+    const { data } = await axios.get('/user');
+    return data;
+  } catch (error) {
+    return thunkApi.rejectWithValue(error.message);
   }
-);
+});
 
 export const getInfoDay = createAsyncThunk(
   '/day/info',
@@ -57,7 +49,7 @@ export const getInfoDay = createAsyncThunk(
       const state = thunkApi.getState();
       const token = state.auth.token;
       setAuthHeader(token);
-      const { data } = await axios.post(`/day/info`, dataDay);
+      const { data } = await axios.post('/day/info', dataDay);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -76,7 +68,6 @@ export const addProduct = createAsyncThunk(
     }
   }
 );
-
 export const deleteProduct = createAsyncThunk(
   '/delete',
   async (dataProduct, thunkApi) => {

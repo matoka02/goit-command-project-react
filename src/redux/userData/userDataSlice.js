@@ -1,24 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-import { addProduct, calculateDailyRate, calculateDailyRateForSignUser, deleteProduct, getCurrentUser, getInfoDay } from './userDataOperation';
-// import userDataInitialState from './userDataInitialState';
-
+import {
+  addProduct,
+  calculateDailyRate,
+  calculateDailyRateForSignUser,
+  deleteProduct,
+  getCurrentUser,
+  getInfoDay,
+} from './userDataOperation';
 
 const initialState = {
   user: null,
   data: null,
-  userSummary: { 
-    eatenProducts: [], 
-    date: '', 
-    daySummary: {}, 
-    id: '' 
-  },
+  userSummary: { eatenProducts: [], date: '', daySummary: {}, id: '' },
   modalOpen: false,
   modalData: [],
   isLoading: false,
   error: '',
 };
-
 const pendingHandlerAuth = (state, action) => {
   state.isLoading = true;
   state.error = null;
@@ -31,7 +29,6 @@ const rejectedHandler = (state, action) => {
 
 export const userDataSlice = createSlice({
   name: 'userData',
-  // initialState: userDataInitialState,
   initialState,
   reducers: {
     modalOpen(state, action) {
@@ -110,6 +107,5 @@ export const userDataSlice = createSlice({
     });
   },
 });
-
 export const { modalOpen, modalClose, setDataCalendar } = userDataSlice.actions;
 export const userDataReducer = userDataSlice.reducer;

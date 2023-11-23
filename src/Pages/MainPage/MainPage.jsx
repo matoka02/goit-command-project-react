@@ -1,18 +1,18 @@
-import { useSelector } from 'react-redux';
-
+import DailyCaloriesForm from 'components/DailyCaloriesForm/DailyCaloriesForm';
+import Modal from 'components/Modal/Modal';
+import RightSideBar from 'components/RightSideBar/RightSideBar';
 import { useIsMobile, useIsTabletOrDesktop } from 'hooks/mediaQuery';
+
+import { useSelector } from 'react-redux';
 import { isSideBarOpen } from 'redux/auth/authSelectors';
 import { selectOpenModal } from 'redux/userData/userDataSelectors';
-import DailyCaloriesForm from 'components/DailyCaloriesForm/DailyCaloriesForm';
-import RightSideBar from 'components/RightSideBar/RightSideBar';
-import Modal from 'components/Modal/Modal';
 
 const MainPage = () => {
   const isSideBarModalOpen = useSelector(isSideBarOpen);
+
   const isModalOpen = useSelector(selectOpenModal);
   const isMobile = useIsMobile();
-  const isTabletOrDesktop = useIsTabletOrDesktop();
-
+  const isTabletOrDesc = useIsTabletOrDesktop();
   return (
     <>
       {isSideBarModalOpen && <RightSideBar />}
@@ -21,12 +21,11 @@ const MainPage = () => {
       ) : isMobile && isModalOpen ? (
         <Modal />
       ) : null}
-      {isTabletOrDesktop && !isModalOpen ? (
+      {isTabletOrDesc && !isModalOpen ? (
         <DailyCaloriesForm />
-      ) : isTabletOrDesktop && isModalOpen ? (
+      ) : isTabletOrDesc && isModalOpen ? (
         <>
-          <DailyCaloriesForm />
-          <Modal />
+          <DailyCaloriesForm /> <Modal />
         </>
       ) : null}
     </>

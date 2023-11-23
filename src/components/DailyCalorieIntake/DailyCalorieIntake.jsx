@@ -1,48 +1,66 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPortal } from 'react-dom';
-
-import { useIsTabletOrDesktop } from 'hooks/mediaQuery';
-import { selectModalDataDailyRate, selectModalDataNotAllowedProducts } from 'redux/userData/userDataSelectors';
+import {
+  BtnLosingWeight,
+  BtnLosingWeightBox,
+  BtnTabletDescClose,
+  BtnTabletDescCloseSvg,
+  Container,
+  Item,
+  Span,
+  Title,
+  TitleSecondary,
+  Value,
+  Wrapper,
+} from './DailyCalorieIntake.styled';
+import {
+  selectModalDataDailyRate,
+  selectModalDataNotAllowedProducts,
+} from 'redux/userData/userDataSelectors';
 import { modalClose } from 'redux/userData/userDataSlice';
-import iconBtnClose from 'assets/sprite.svg';
-import { BtnLosingWeight, BtnLosingWeightBox, BtnTabletDesktopClose, BtnTabletDesktopCloseSvg, Container, Item, Span, Title, TitleSecondary, Value, Wrapper } from './DailyCalorieIntake.styled';
+import { useIsTabletOrDesktop } from 'hooks/mediaQuery';
+import iconBtnClose from '../../assets/sprite.svg';
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 const DailyCalorieIntake = () => {
   const dailyRate = useSelector(selectModalDataDailyRate);
   const notAllowedProducts = useSelector(selectModalDataNotAllowedProducts);
   const dispatch = useDispatch();
-  const isTabletOrDesktop = useIsTabletOrDesktop();
+  const isTabletOrDesc = useIsTabletOrDesktop();
   const modalRoot = document.querySelector('#modal');
 
   useEffect(() => {
-    const handleClose = (evt) => {
-      if (evt.code === 'Escape') dispatch(modalClose());      
+    const handleClose = e => {
+      if (e.code === 'Escape') {
+        dispatch(modalClose());
+      }
     };
     window.addEventListener('keydown', handleClose);
-      return () => {
-        window.removeEventListener('keydown', handleClose);
-        document.body.style.overflow = 'auto';
-      }
+    return () => {
+      window.removeEventListener('keydown', handleClose);
+      document.body.style.overflow = 'auto';
+    };
   }, [dispatch]);
 
-  const closeBackDrop = evt => {
-    if (evt.target === evt.currentTarget) dispatch(modalClose());
+  const closeBackdrop = e => {
+    if (e.target === e.currentTarget) {
+      dispatch(modalClose());
+    }
   };
 
   return createPortal(
-    <Container onClick={closeBackDrop}>
+    <Container onClick={closeBackdrop}>
       <Wrapper>
-        {isTabletOrDesktop && (
+        {isTabletOrDesc && (
           <>
-            <BtnTabletDesktopClose
-              type='button'
+            <BtnTabletDescClose
+              type="button"
               onClick={() => dispatch(modalClose())}
             >
-              <BtnTabletDesktopCloseSvg>
+              <BtnTabletDescCloseSvg>
                 <use href={iconBtnClose + '#icon-btnClose'}></use>
-              </BtnTabletDesktopCloseSvg>
-            </BtnTabletDesktopClose>
+              </BtnTabletDescCloseSvg>
+            </BtnTabletDescClose>
           </>
         )}
         <Title>Your recommended daily calorie intake is</Title>
@@ -53,14 +71,16 @@ const DailyCalorieIntake = () => {
         <ul>
           {notAllowedProducts?.length !== 0 ? (
             notAllowedProducts?.map((item, index) => (
-              <Item>{index}.{index}</Item>
+              <Item>
+                {index}.{item}
+              </Item>
             ))
           ) : (
             <Item>There are no prohibited products</Item>
           )}
           <BtnLosingWeightBox>
             <BtnLosingWeight
-              type='button'
+              type="button"
               onClick={() => dispatch(modalClose())}
             >
               Start losing weight

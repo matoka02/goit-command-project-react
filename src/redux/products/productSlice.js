@@ -1,7 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { searchByQueryProduct } from './productsOperation';
 
-import { searchByQueryProduct } from './productOperation';
-// import productInitialState from './productInitialState';
+const { createSlice } = require('@reduxjs/toolkit');
 
 const initialState = {
   productsSearch: [],
@@ -9,7 +8,6 @@ const initialState = {
   isLoading: false,
   error: '',
 };
-
 const pendingHandler = (state, action) => {
   state.isLoading = true;
   state.error = null;
@@ -22,7 +20,6 @@ const rejectedHandler = (state, action) => {
 
 export const productsSlice = createSlice({
   name: 'products',
-  // initialState: productInitialState,
   initialState,
   reducers: {
     setMobileFormAddProductsOpen(state, action) {
