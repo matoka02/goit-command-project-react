@@ -6,6 +6,7 @@ export const BoxForMobile = styled.div`
   align-items: center;
   margin-bottom: 60px;
 `;
+
 export const Form = styled.form`
   padding: 80px 20px 0 20px;
   @media screen and (min-width: 768px) {
@@ -35,6 +36,7 @@ export const FormBox = styled.div`
     gap: 48px;
   }
 `;
+
 export const Input = styled.input`
   border: none;
   border-bottom: 1px solid #e0e0e0;
@@ -58,6 +60,7 @@ export const Input = styled.input`
     width: 240px;
   }
 `;
+
 export const InputGrams = styled.input`
   border: none;
   border-bottom: 1px solid #e0e0e0;
@@ -73,7 +76,6 @@ export const InputGrams = styled.input`
     font-size: ${p => p.theme.fontSizes.xs};
     line-height: 1.21;
     letter-spacing: 0.04em;
-
     color: ${p => p.theme.colors.grey};
   }
   @media screen and (min-width: 768px) {
@@ -87,13 +89,13 @@ export const BtnAddWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const BtnAdd = styled.button`
   font-family: ${p => p.theme.fonts.main};
   font-weight: ${p => p.theme.fontWeights.bold};
   font-size: ${p => p.theme.fontSizes.xs};
   line-height: 1.21;
   letter-spacing: 0.04em;
-
   color: ${p => p.theme.colors.white};
   border: none;
   padding: 13px 0;
@@ -102,6 +104,7 @@ export const BtnAdd = styled.button`
   box-shadow: 0px 4px 10px rgba(252, 132, 45, 0.5);
   border-radius: 30px;
 `;
+
 export const Btn = styled.button`
   background-color: ${p => p.theme.colors.orange};
   border: none;
@@ -116,6 +119,7 @@ export const Btn = styled.button`
       rgba(255, 255, 255, 0.3) -4px -4px 6px;
   }
 `;
+
 export const Svg = styled.svg`
   width: 13px;
   height: 13px;

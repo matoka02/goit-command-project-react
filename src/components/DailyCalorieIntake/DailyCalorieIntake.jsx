@@ -1,26 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  BtnLosingWeight,
-  BtnLosingWeightBox,
-  BtnTabletDescClose,
-  BtnTabletDescCloseSvg,
-  Container,
-  Item,
-  Span,
-  Title,
-  TitleSecondary,
-  Value,
-  Wrapper,
-} from './DailyCalorieIntake.styled';
-import {
-  selectModalDataDailyRate,
-  selectModalDataNotAllowedProducts,
-} from 'redux/userData/userDataSelectors';
-import { modalClose } from 'redux/userData/userDataSlice';
-import { useIsTabletOrDesktop } from 'hooks/mediaQuery';
-import iconBtnClose from '../../assets/sprite.svg';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useIsTabletOrDesktop } from 'hooks/mediaQuery';
+import { selectModalDataDailyRate, selectModalDataNotAllowedProducts } from 'redux/userData/userDataSelectors';
+import { modalClose } from 'redux/userData/userDataSlice';
+import iconBtnClose from 'assets/sprite.svg';
+import { BtnLosingWeight, BtnLosingWeightBox, BtnTabletDesktopClose, BtnTabletDesktopCloseSvg, Container, Item, Span, Title, TitleSecondary, Value, Wrapper } from './DailyCalorieIntake.styled';
 
 const DailyCalorieIntake = () => {
   const dailyRate = useSelector(selectModalDataDailyRate);
@@ -30,10 +16,8 @@ const DailyCalorieIntake = () => {
   const modalRoot = document.querySelector('#modal');
 
   useEffect(() => {
-    const handleClose = e => {
-      if (e.code === 'Escape') {
-        dispatch(modalClose());
-      }
+    const handleClose = evt => {
+      if (evt.code === 'Escape') dispatch(modalClose());
     };
     window.addEventListener('keydown', handleClose);
     return () => {
@@ -42,8 +26,8 @@ const DailyCalorieIntake = () => {
     };
   }, [dispatch]);
 
-  const closeBackdrop = e => {
-    if (e.target === e.currentTarget) {
+  const closeBackdrop = evt => {
+    if (evt.target === evt.currentTarget) {
       dispatch(modalClose());
     }
   };
@@ -53,14 +37,14 @@ const DailyCalorieIntake = () => {
       <Wrapper>
         {isTabletOrDesc && (
           <>
-            <BtnTabletDescClose
-              type="button"
+            <BtnTabletDesktopClose
+              type='button'
               onClick={() => dispatch(modalClose())}
             >
-              <BtnTabletDescCloseSvg>
+              <BtnTabletDesktopCloseSvg>
                 <use href={iconBtnClose + '#icon-btnClose'}></use>
-              </BtnTabletDescCloseSvg>
-            </BtnTabletDescClose>
+              </BtnTabletDesktopCloseSvg>
+            </BtnTabletDesktopClose>
           </>
         )}
         <Title>Your recommended daily calorie intake is</Title>
@@ -80,7 +64,7 @@ const DailyCalorieIntake = () => {
           )}
           <BtnLosingWeightBox>
             <BtnLosingWeight
-              type="button"
+              type='button'
               onClick={() => dispatch(modalClose())}
             >
               Start losing weight

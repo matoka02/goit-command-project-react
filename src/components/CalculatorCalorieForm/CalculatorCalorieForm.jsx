@@ -1,9 +1,14 @@
 import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+import { validateCalculatorCalorie } from 'utility/auxiliaryFunctions';
+import { calculateDailyRateForSignUser } from 'redux/userData/userDataOperation';
 import {
   Box,
-  BoxForTabletAndDesc,
-  BoxForTabletAndDescSecond,
-  BoxForTabletAndDescThird,
+  BoxForTabletAndDesktop,
+  BoxForTabletAndDesktopSecond,
+  BoxForTabletAndDesktopThird,
   BoxTitle,
   Btn,
   Container,
@@ -18,10 +23,6 @@ import {
   WrapperRadioLabel,
   WrapperSubmit,
 } from './CalculatorCalorieForm.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { calculateDailyRateForSignUser } from 'redux/userData/userDataOperation';
-import { useNavigate } from 'react-router-dom';
-import { validateCalculatorCalorie } from 'utility/auxiliaryFunctions';
 
 const CalculatorCalorieForm = () => {
   const dispatch = useDispatch();
@@ -50,17 +51,18 @@ const CalculatorCalorieForm = () => {
       navigate('/diary');
     },
   });
+
   return (
     <Container>
       <Title>Calculate your daily calorie intake right now</Title>
       <Form onSubmit={formik.handleSubmit}>
-        <BoxForTabletAndDesc>
-          <BoxForTabletAndDescSecond>
+        <BoxForTabletAndDesktop>
+          <BoxForTabletAndDesktopSecond>
             <Label>
               <Input
-                type="text"
-                id="height"
-                placeholder="Height"
+                type='text'
+                id='height'
+                placeholder='Height'
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.height}
@@ -71,9 +73,9 @@ const CalculatorCalorieForm = () => {
             </Label>
             <Label>
               <Input
-                type="text"
-                placeholder="Age"
-                id="age"
+                type='text'
+                placeholder='Age'
+                id='age'
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.age}
@@ -84,9 +86,9 @@ const CalculatorCalorieForm = () => {
             </Label>
             <Label>
               <Input
-                type="text"
-                placeholder="Current weight"
-                id="weight"
+                type='text'
+                placeholder='Current weight'
+                id='weight'
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.weight}
@@ -95,13 +97,13 @@ const CalculatorCalorieForm = () => {
                 <ErrorBox>{formik.errors.weight}</ErrorBox>
               ) : null}
             </Label>
-          </BoxForTabletAndDescSecond>
-          <BoxForTabletAndDescThird>
+          </BoxForTabletAndDesktopSecond>
+          <BoxForTabletAndDesktopThird>
             <Label>
               <Input
-                type="text"
-                placeholder="Desired weight"
-                id="desiredWeight"
+                type='text'
+                placeholder='Desired weight'
+                id='desiredWeight'
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.desiredWeight}
@@ -119,54 +121,54 @@ const CalculatorCalorieForm = () => {
             <WrapperRadio>
               <DivRadio>
                 <WrapperRadioBtn
-                  type="radio"
-                  value="1"
-                  id="bloodType"
-                  name="bloodType"
+                  type='radio'
+                  value='1'
+                  id='bloodType'
+                  name='bloodType'
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
 
-                <WrapperRadioLabel htmlFor="1">1</WrapperRadioLabel>
+                <WrapperRadioLabel htmlFor='1'>1</WrapperRadioLabel>
               </DivRadio>
               <DivRadio>
                 <WrapperRadioBtn
-                  type="radio"
-                  value="2"
-                  name="bloodType"
-                  id="bloodType"
+                  type='radio'
+                  value='2'
+                  name='bloodType'
+                  id='bloodType'
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                <WrapperRadioLabel htmlFor="2">2</WrapperRadioLabel>
+                <WrapperRadioLabel htmlFor='2'>2</WrapperRadioLabel>
               </DivRadio>
               <DivRadio>
                 <WrapperRadioBtn
-                  type="radio"
-                  value="3"
-                  name="bloodType"
-                  id="bloodType"
+                  type='radio'
+                  value='3'
+                  name='bloodType'
+                  id='bloodType'
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                <WrapperRadioLabel htmlFor="3">3</WrapperRadioLabel>
+                <WrapperRadioLabel htmlFor='3'>3</WrapperRadioLabel>
               </DivRadio>
               <DivRadio>
                 <WrapperRadioBtn
-                  type="radio"
-                  value="4"
-                  name="bloodType"
-                  id="bloodType"
+                  type='radio'
+                  value='4'
+                  name='bloodType'
+                  id='bloodType'
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                <WrapperRadioLabel htmlFor="4">4</WrapperRadioLabel>
+                <WrapperRadioLabel htmlFor='4'>4</WrapperRadioLabel>
               </DivRadio>
             </WrapperRadio>
-          </BoxForTabletAndDescThird>
-        </BoxForTabletAndDesc>
+          </BoxForTabletAndDesktopThird>
+        </BoxForTabletAndDesktop>
         <WrapperSubmit>
-          <Btn type="submit">Start losing weight</Btn>
+          <Btn type='submit'>Start losing weight</Btn>
         </WrapperSubmit>
       </Form>
     </Container>
