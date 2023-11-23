@@ -2,8 +2,8 @@ import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { authRegister } from 'redux/auth/authOperation';
 import { validateForRegister } from 'utility/auxiliaryFunctions';
+import { authRegister } from 'redux/auth/authOperation';
 import { Box, Btn, Container, ErrorBox, Form, Input, Label, Link, Title } from './RegistrationForm.styled';
 
 const RegistrationForm = () => {
@@ -27,7 +27,6 @@ const RegistrationForm = () => {
       navigate('/login');
     },
   });
-
   return (
     <Container>
       <Title>Register</Title>

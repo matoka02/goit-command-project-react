@@ -2,9 +2,9 @@ import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { authLogin } from 'redux/auth/authOperation';
 import { validateForLogin } from 'utility/auxiliaryFunctions';
-import { Box, Btn, Container, ErrorBox, Form, Input, Label, Link, Title } from './LoginForm.styled';
+import { authLogin } from 'redux/auth/authOperation';
+import { Box, Btn, Container, Form, Input, Title, Link, ErrorBox, Label } from './LoginForm.styled';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -57,8 +57,8 @@ const LoginForm = () => {
           ) : null}
         </Label>
         <Box>
-          <Btn type='submit'>Register</Btn>
-          <Link to='/login'>Login</Link>
+          <Btn type='submit'>Sign in</Btn>
+          <Link to='/registration'>Register</Link>
         </Box>
       </Form>
     </Container>

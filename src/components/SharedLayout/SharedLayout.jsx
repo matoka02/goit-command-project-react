@@ -13,7 +13,7 @@ const SharedLayout = () => {
       {isModalOpen ? null : <Header />}
       <Outlet />
     </Suspense>
-  )
+  );
 };
 
 export default SharedLayout;

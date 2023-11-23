@@ -5,7 +5,7 @@ const Loader = () => {
     <TailSpin
       height='80'
       width='80'
-      color='#fc842d'
+      color='#FC842D'
       ariaLabel='tail-spin-loading'
       radius='1'
       wrapperStyle={{
@@ -17,7 +17,7 @@ const Loader = () => {
       wrapperClass=''
       visible={true}
     />
-  )
+  );
 };
 
 export default Loader;

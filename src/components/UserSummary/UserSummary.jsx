@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
-import { selectDailyRateForFist, selectDataCalendar, selectModalDataNotAllowedProducts, selectSummary } from 'redux/userData/userDataSelectors';
-import { correctDataForSummary, replaceForSummary } from 'utility/auxiliaryFunctions';
 import { useIsTabletOrDesktop } from 'hooks/mediaQuery';
-import { Container, ItemSummary, ListSummary, Title, Text, BoxNotRecommendedProducts, ListNotRecommendedProducts, TitleSecond } from './UserSummary.styled';
+import { correctDataForSummary, replaceForSummary } from 'utility/auxiliaryFunctions';
+import { selectDailyRateForFist, selectDataCalendar, selectModalDataNotAllowedProducts, selectSummary } from 'redux/userData/userDataSelectors';
+import { BoxNotRecommendedProducts, Container, ItemSummary, ListNotRecommendedProducts, ListSummary, Text, Title, TitleSecond } from './UserSummary.styled';
 
 const UserSummary = () => {
   const dailyRateForFist = useSelector(selectDailyRateForFist);
@@ -16,16 +16,17 @@ const UserSummary = () => {
 
   return (
     <Container>
-      
       <ListSummary>
         <Title>
-          {!dataToday ? correctDataForSummary(Date.now()) : replaceForSummary(dataToday)}
+          {!dataToday
+            ? correctDataForSummary(Date.now())
+            : replaceForSummary(dataToday)}
         </Title>
         <ItemSummary>
           <Text>Left</Text>
           <Text>
             {!summary?.kcalLeft && !summary?.daySummary?.kcalLeft
-              ? '0'
+              ? '0 '
               : summary?.kcalLeft || summary?.daySummary?.kcalLeft}{' '}
             kcal
           </Text>
@@ -33,27 +34,35 @@ const UserSummary = () => {
         <ItemSummary>
           <Text>Consumed</Text>
           <Text>
-            {!summary?.daySummary?.kcalConsumed?.toFixed(1) && !summary?.kcalConsumed?.toFixed(1)
+            {!summary?.daySummary?.kcalConsumed?.toFixed(1) &&
+              !summary?.kcalConsumedkcalConsumed?.toFixed(1)
               ? '0'
-              : summary?.daySummary?.kcalConsumed?.toFixed(1) || summary?.kcalConsumed?.toFixed(1)}{' '}
+              : summary?.daySummary?.kcalConsumed?.toFixed(1) ||
+              summary?.kcalConsumed?.toFixed(1)}{' '}
             kcal
           </Text>
         </ItemSummary>
         <ItemSummary>
           <Text>Daily rate</Text>
           <Text>
-            {!summary?.daySummary?.dailyRate && !dailyRateForFist && !summary?.dailyRate
+            {!summary?.daySummary?.dailyRate &&
+              !dailyRateForFist &&
+              !summary?.dailyRate
               ? '0 '
-              : summary?.daySummary?.dailyRate || dailyRateForFist || summary?.dailyRate}
+              : summary?.daySummary?.dailyRate ||
+              dailyRateForFist ||
+              summary?.dailyRate}
             kcal
           </Text>
         </ItemSummary>
         <ItemSummary>
           <Text>n% of normal</Text>
           <Text>
-            {!summary?.daySummary?.percentsOfDailyRate && !summary?.percentsOfDailyRate
+            {!summary?.daySummary?.percentsOfDailyRate &&
+              !summary?.percentsOfDailyRate
               ? '0'
-              : summary?.daySummary?.percentsOfDailyRate.toFixed(2) || summary?.percentsOfDailyRate.toFixed(2)}{' '}
+              : summary?.daySummary?.percentsOfDailyRate.toFixed(2) ||
+              summary?.percentsOfDailyRate.toFixed(2)}{' '}
             %
           </Text>
         </ItemSummary>
@@ -67,7 +76,9 @@ const UserSummary = () => {
               {notAllowedProducts?.length > 0 ? (
                 notAllowedProducts.map((el, index) => (
                   <li key={uuidv4()}>
-                    <Text>{index}.{el}</Text>
+                    <Text>
+                      {index}.{el}
+                    </Text>
                   </li>
                 ))
               ) : (
@@ -87,7 +98,9 @@ const UserSummary = () => {
               {notAllowedProducts?.length > 0 ? (
                 notAllowedProducts.map((el, index) => (
                   <li key={uuidv4()}>
-                    <Text>{index}.{el}</Text>
+                    <Text>
+                      {index}.{el}
+                    </Text>
                   </li>
                 ))
               ) : (

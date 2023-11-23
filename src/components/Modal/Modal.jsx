@@ -8,6 +8,7 @@ import DailyCalorieIntake from 'components/DailyCalorieIntake/DailyCalorieIntake
 import iconBtnCloseMob from 'assets/sprite.svg';
 import { BoxMobileForBtn, BtnMobClose, BtnMobCloseSvg } from './Modal.styled';
 
+
 const Modal = () => {
   const isMobile = useIsMobile();
   const dispatch = useDispatch();
@@ -30,7 +31,9 @@ const Modal = () => {
         });
       }
     };
-    if (isModalOpen) scrollToTop();
+    if (isModalOpen) {
+      scrollToTop();
+    }
   }, [isDesktop, isModalOpen, isTablet]);
 
   return (
@@ -45,11 +48,11 @@ const Modal = () => {
             <use href={iconBtnCloseMob + '#icon-btn-mob-close'}></use>
           </BtnMobCloseSvg>
         </BoxMobileForBtn>
-
       )}
+
       <DailyCalorieIntake />
     </>
-  )
+  );
 };
 
 export default Modal;

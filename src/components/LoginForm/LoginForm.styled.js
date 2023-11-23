@@ -124,7 +124,6 @@ export const ErrorBox = styled.div`
   color: red;
   position: absolute;
   animation: placeHolderVisible 1200ms;
-
   @keyframes placeHolderVisible {
     0% {
       left: -100px;
