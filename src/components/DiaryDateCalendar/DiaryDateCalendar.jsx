@@ -1,20 +1,14 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import iconCalendar from '../../assets/sprite.svg';
-import { useDispatch, useSelector } from 'react-redux';
+
+import { correctData, dateToRequest } from 'utility/auxiliaryFunctions';
 import { selectDataCalendar } from 'redux/userData/userDataSelectors';
 import { setDataCalendar } from 'redux/userData/userDataSlice';
-import {
-  Box,
-  Button,
-  Container,
-  Section,
-  Svg,
-  TitleDate,
-} from './DiaryDateCalendar.styled';
-import { correctData, dateToRequest } from 'utility/auxiliaryFunctions';
 import { getInfoDay } from 'redux/userData/userDataOperation';
+import iconCalendar from 'assets/sprite.svg';
+import { Box, Button, Container, Section, Svg, TitleDate } from './DiaryDateCalendar.styled';
 
 const DiaryDateCalendar = () => {
   const [value, onChange] = useState(new Date());
@@ -36,8 +30,9 @@ const DiaryDateCalendar = () => {
       setOpenCalendar(true);
     }
   };
-  const handleClose = event => {
-    if (event.target === event.currentTarget) {
+
+  const handleClose = evt => {
+    if (evt.target === evt.currentTarget) {
       setOpenCalendar(false);
     }
   };
@@ -50,7 +45,7 @@ const DiaryDateCalendar = () => {
             {!dataCalendarValue ? correctData(Date.now()) : dataCalendarValue}
           </TitleDate>
         </div>
-        <Button type="button" onClick={handleClick}>
+        <Button type='button' onClick={handleClick}>
           <Svg>
             <use href={iconCalendar + '#icon-calendar'}></use>
           </Svg>

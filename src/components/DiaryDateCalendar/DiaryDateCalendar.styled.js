@@ -1,8 +1,10 @@
 import styled from 'styled-components';
+
 export const Container = styled.div`
   position: relative;
   z-index: 10;
 `;
+
 export const Section = styled.section`
   padding: 40px 0 0 20px;
   display: flex;
@@ -17,6 +19,7 @@ export const Section = styled.section`
     padding: 147px 0 0 16px;
   }
 `;
+
 export const TitleDate = styled.h2`
   font-family: ${p => p.theme.fonts.main};
   font-weight: ${p => p.theme.fontWeights.bolt};
@@ -28,6 +31,7 @@ export const TitleDate = styled.h2`
     line-height: 1.2;
   }
 `;
+
 export const Button = styled.button`
   width: 20px;
   height: 20px;
@@ -43,10 +47,12 @@ export const Button = styled.button`
     }
   }
 `;
+
 export const Svg = styled.svg`
   width: 20px;
   height: 20px;
 `;
+
 export const Box = styled.div`
   display: flex;
   justify-content: center;
