@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { logOutUser } from 'redux/auth/authOperation';
 import { selectUserName } from 'redux/auth/authSelectors';
-import { selectMobileFromAddProduct } from 'redux/products/productSelectors';
+import { selectMobileFromAddProduct } from 'redux/products/productsSelectors';
 import { setMobileFormAddProductsClose } from 'redux/products/productSlice';
 import backForMobileBtn from 'assets/sprite.svg';
 import { Btn, BtnBack, BtnBox, Container, Svg, TextName } from './UserInfo.styled';
 
 const UserInfo = () => {
   const name = useSelector(selectUserName);
+  // console.log(name);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isMobileFormOpen = useSelector(selectMobileFromAddProduct);
@@ -18,6 +19,7 @@ const UserInfo = () => {
     dispatch(logOutUser());
     navigate('/');
   };
+
   const handleBack = () => {
     dispatch(setMobileFormAddProductsClose());
   };
@@ -38,7 +40,7 @@ const UserInfo = () => {
         Exit
       </Btn>
     </Container>
-  )
+  );
 };
 
 export default UserInfo;
