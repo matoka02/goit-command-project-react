@@ -1,26 +1,24 @@
 import { lazy, useEffect } from 'react';
 import { Suspense } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
+
+import { useIsDesktop, useIsMobile, useIsTablet } from 'hooks/mediaQuery';
+import { selectSid, selectToken } from 'redux/auth/authSelectors';
+import { refreshUser } from 'redux/auth/authOperation';
+import { getCurrentUser } from 'redux/userData/userDataOperation';
+
 import Loader from './Loader/Loader';
 import SharedLayout from './SharedLayout/SharedLayout';
 import { PublicRoute } from './PublicRoute/PublicRoute';
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectSid, selectToken } from 'redux/auth/authSelectors';
-import { refreshUser } from 'redux/auth/authOperation';
-import bgForDesc from '../assets/images/background-desc.png';
-import bgForTablet from '../assets/images/background-tabl.png';
-import { useIsDesktop, useIsMobile, useIsTablet } from 'hooks/mediaQuery';
-import { getCurrentUser } from 'redux/userData/userDataOperation';
+import bgForDesktop from 'assets/images/Img-desktop.png';
+import bgForTablet from 'assets/images/Img-tablet.png';
 
 const MainPage = lazy(() => import('../Pages/MainPage/MainPage'));
-const RegisterPage = lazy(() =>
-  import('../Pages/RegistrationPage/RegistrationPage')
-);
+const RegisterPage = lazy(() => import('../Pages/RegistrationPage/RegistrationPage'));
 const LoginPage = lazy(() => import('../Pages/LoginPage/LoginPage'));
-const CalculatorPage = lazy(() =>
-  import('../Pages/CalculatorPage/CalculatorPage')
-);
+const CalculatorPage = lazy(() => import('../Pages/CalculatorPage/CalculatorPage'));
 const DiaryPage = lazy(() => import('../Pages/DiaryPage/DiaryPage'));
 
 export const App = () => {
@@ -38,7 +36,7 @@ export const App = () => {
 
   useEffect(() => {
     if (!isSignInUser && isDesktop) {
-      document.body.style.background = `url(${bgForDesc}) no-repeat 108% 0px `;
+      document.body.style.background = `url(${bgForDesktop}) no-repeat 108% 0px `;
       document.body.style.height = '880px';
     }
     if (!isSignInUser && isTablet) {
@@ -54,50 +52,48 @@ export const App = () => {
   }, [isDesktop, isMobile, isSignInUser, isTablet]);
 
   useEffect(() => {
-    if (isLoggedInUser) {
-      dispatch(getCurrentUser());
-    }
+    if (isLoggedInUser) dispatch(getCurrentUser());
   }, [dispatch, isLoggedInUser]);
 
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route path="/" element={<SharedLayout />}>
+        <Route path='/' element={<SharedLayout />}>
           <Route
-            path="/"
+            path='/'
             element={
-              <PublicRoute redirectTo="/calculator" component={<MainPage />} />
+              <PublicRoute redirectTo='/calculator' component={<MainPage />} />
             }
           />
           <Route
-            path="/registration"
+            path='/registration'
             element={
               <PublicRoute
-                redirectTo="/calculator"
+                redirectTo='/calculator'
                 component={<RegisterPage />}
               />
             }
           />
           <Route
-            path="/login"
+            path='/login'
             element={
-              <PublicRoute redirectTo="/calculator" component={<LoginPage />} />
+              <PublicRoute redirectTo='/calculator' component={<LoginPage />} />
             }
           />
           <Route
-            path="/calculator"
+            path='/calculator'
             element={
-              <PrivateRoute redirectTo="/" component={<CalculatorPage />} />
+              <PrivateRoute redirectTo='/' component={<CalculatorPage />} />
             }
           />
           <Route
-            path="/diary"
+            path='/diary'
             element={
-              <PrivateRoute redirectTo="/diary" component={<DiaryPage />} />
+              <PrivateRoute redirectTo='/diary' component={<DiaryPage />} />
             }
           />
         </Route>
-        <Route path="*" element={<Navigate to={'/'} />} />
+        <Route path='*' element={<Navigate to={'/'} />} />
       </Routes>
     </Suspense>
   );
