@@ -1,7 +1,6 @@
+import DiaryProductsListItem from 'components/DiaryProductsListItem/DiaryProductsListItem';
 import { useSelector } from 'react-redux';
-
 import { selectEatenProducts } from 'redux/userData/userDataSelectors';
-import DiaryProductsListItem, { } from 'components/DiaryProductsListItem/DiaryProductsListItem';
 import { List } from './DiaryProductsList.styled';
 
 const DiaryProductsList = () => {
