@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { logOutUser } from 'redux/auth/authOperation';
 import { selectUserName } from 'redux/auth/authSelectors';
-import { selectMobileFromAddProduct } from 'redux/products/productsSelectors';
+import { selectMobileFromAddProduct } from 'redux/products/productSelectors';
 import { setMobileFormAddProductsClose } from 'redux/products/productSlice';
 import backForMobileBtn from 'assets/sprite.svg';
 import { Btn, BtnBack, BtnBox, Container, Svg, TextName } from './UserInfo.styled';
