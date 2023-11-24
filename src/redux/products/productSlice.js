@@ -1,21 +1,29 @@
-import { searchByQueryProduct } from './productsOperation';
+import { createSlice } from '@reduxjs/toolkit';
 
-const { createSlice } = require('@reduxjs/toolkit');
+import { searchByQueryProduct } from './productOperation';
+import initialState from './productInitialState';
 
-const initialState = {
-  productsSearch: [],
-  mobileFormAddProductsOpen: false,
-  isLoading: false,
-  error: '',
-};
-const pendingHandler = (state, action) => {
+// const initialState = {
+//   productsSearch: [],
+//   mobileFormAddProductsOpen: false,
+//   isLoading: false,
+//   error: '',
+// };
+
+const handlePending = (state, action) => {
   state.isLoading = true;
   state.error = null;
 };
 
-const rejectedHandler = (state, action) => {
+const handleRejected = (state, { payload }) => {
   state.isLoading = false;
-  state.error = action.payload;
+  state.error = payload;
+};
+
+const searchByQueryProductFulfilled = (state, { payload }) => {
+  state.productsSearch = payload.data;
+  state.isLoading = false;
+  state.isError = '';
 };
 
 export const productsSlice = createSlice({
@@ -30,13 +38,10 @@ export const productsSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(searchByQueryProduct.pending, pendingHandler);
-    builder.addCase(searchByQueryProduct.rejected, rejectedHandler);
-    builder.addCase(searchByQueryProduct.fulfilled, (state, action) => {
-      state.productsSearch = action.payload.data;
-      state.isLoading = false;
-      state.isError = '';
-    });
+    builder
+      .addCase(searchByQueryProduct.pending, handlePending)
+      .addCase(searchByQueryProduct.rejected, handleRejected)
+      .addCase(searchByQueryProduct.fulfilled, searchByQueryProductFulfilled);
   },
 });
 

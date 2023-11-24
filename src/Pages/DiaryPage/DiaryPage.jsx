@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useIsMobile } from 'hooks/mediaQuery';
 import { isSideBarOpen } from 'redux/auth/authSelectors';
 import { setMobileFormAddProductsOpen } from 'redux/products/productSlice';
-import { selectMobileFromAddProduct } from 'redux/products/productsSelectors';
+import { selectMobileFromAddProduct } from 'redux/products/productSelectors';
 
 import RightSideBar from 'components/RightSideBar/RightSideBar';
 import UserSummary from 'components/UserSummary/UserSummary';

@@ -1,30 +1,82 @@
-import { createSlice } from '@reduxjs/toolkit';
-import {
-  addProduct,
-  calculateDailyRate,
-  calculateDailyRateForSignUser,
-  deleteProduct,
-  getCurrentUser,
-  getInfoDay,
-} from './userDataOperation';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
-const initialState = {
-  user: null,
-  data: null,
-  userSummary: { eatenProducts: [], date: '', daySummary: {}, id: '' },
-  modalOpen: false,
-  modalData: [],
-  isLoading: false,
-  error: '',
+import { addProduct, calculateDailyRate, calculateDailyRateForSignUser, deleteProduct, getCurrentUser, getInfoDay } from './userDataOperation';
+import initialState from './userDataInitialState';
+
+// const initialState = {
+//   user: null,
+//   data: null,
+//   userSummary: { eatenProducts: [], date: '', daySummary: {}, id: '' },
+//   modalOpen: false,
+//   modalData: [],
+//   isLoading: false,
+//   error: '',
+// };
+
+const defaultStatus = {
+  pending: 'pending',
+  fulfilled: 'fulfilled',
+  rejected: 'rejected',
 };
-const pendingHandlerAuth = (state, action) => {
+
+const userDataArr = [calculateDailyRate, calculateDailyRateForSignUser, getCurrentUser, getInfoDay, addProduct, deleteProduct];
+
+const fn = status => userDataArr.map(el => el[status]);
+
+const handlePending = (state, action) => {
   state.isLoading = true;
   state.error = null;
 };
 
-const rejectedHandler = (state, action) => {
+const handleRejected = (state, { payload }) => {
   state.isLoading = false;
-  state.error = action.payload;
+  state.error = payload;
+};
+
+const calculateDailyRateFulfilled = (state, { payload }) => {
+  state.modalData = payload;
+  state.isLoading = false;
+  state.error = '';
+};
+
+const calculateDailyRateForSignUserFulfilled = (state, { payload }) => {
+  state.user.userData.dailyRate = payload.dailyRate;
+  state.isLoading = false;
+  state.error = '';
+};
+
+const getCurrentUserFulfilled = (state, { payload }) => {
+  state.user = payload;
+  state.isLoading = false;
+  state.error = '';
+};
+
+const getInfoDayFulfilled = (state, { payload }) => {
+  state.userSummary = {
+    id: payload.id,
+    eatenProducts: payload.eatenProducts,
+    daySummary: payload.daySummary,
+    date: payload.data,
+  };
+  state.isLoading = false;
+  state.error = '';
+};
+
+const addProductFulfilled = (state, { payload }) => {
+  state.userSummary = {
+    id: payload?.newDay?.id ? payload.newDay.id : payload?.day?.id,
+    eatenProducts: payload?.newDay?.eatenProducts ? payload.newDay.eatenProducts : payload?.day?.eatenProducts,
+    daySummary: payload?.newSummary ? payload.newSummary : payload?.daySummary,
+    date: payload?.newDay?.date ? payload?.newDay.date : payload?.day?.date,
+  };
+  state.isLoading = false;
+  state.error = '';
+};
+
+const deleteProductFulfilled = (state, { payload }) => {
+  state.userSummary.daySummary = payload.newDaySummary;
+  state.isLoading = false;
+  state.error = '';
 };
 
 export const userDataSlice = createSlice({
@@ -37,75 +89,22 @@ export const userDataSlice = createSlice({
     modalClose(state, action) {
       state.modalOpen = false;
     },
-    setDataCalendar(state, action) {
-      state.data = action.payload;
+    setDataCalendar(state, { payload }) {
+      state.data = payload;
     },
   },
   extraReducers: builder => {
-    builder.addCase(calculateDailyRate.pending, pendingHandlerAuth);
-    builder.addCase(calculateDailyRate.rejected, rejectedHandler);
-    builder.addCase(calculateDailyRate.fulfilled, (state, action) => {
-      state.modalData = action.payload;
-      state.isLoading = false;
-      state.error = '';
-    });
-    builder.addCase(calculateDailyRateForSignUser.pending, pendingHandlerAuth);
-    builder.addCase(calculateDailyRateForSignUser.rejected, rejectedHandler);
-    builder.addCase(
-      calculateDailyRateForSignUser.fulfilled,
-      (state, action) => {
-        state.user.userData.dailyRate = action.payload.dailyRate;
-        state.isLoading = false;
-        state.error = '';
-      }
-    );
-    builder.addCase(getCurrentUser.pending, pendingHandlerAuth);
-    builder.addCase(getCurrentUser.rejected, rejectedHandler);
-    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
-      state.user = action.payload;
-      state.isLoading = false;
-      state.error = '';
-    });
-    builder.addCase(getInfoDay.pending, pendingHandlerAuth);
-    builder.addCase(getInfoDay.rejected, rejectedHandler);
-    builder.addCase(getInfoDay.fulfilled, (state, action) => {
-      state.userSummary = {
-        id: action.payload.id,
-        eatenProducts: action.payload.eatenProducts,
-        daySummary: action.payload.daySummary,
-        date: action.payload.data,
-      };
-      state.isLoading = false;
-      state.error = '';
-    });
-    builder.addCase(addProduct.pending, pendingHandlerAuth);
-    builder.addCase(addProduct.rejected, rejectedHandler);
-    builder.addCase(addProduct.fulfilled, (state, action) => {
-      state.userSummary = {
-        id: action.payload?.newDay?.id
-          ? action.payload.newDay.id
-          : action.payload?.day?.id,
-        eatenProducts: action.payload?.newDay?.eatenProducts
-          ? action.payload.newDay.eatenProducts
-          : action.payload?.day?.eatenProducts,
-        daySummary: action.payload?.newSummary
-          ? action.payload.newSummary
-          : action.payload?.daySummary,
-        date: action.payload?.newDay?.date
-          ? action.payload?.newDay.date
-          : action.payload?.day?.date,
-      };
-      state.isLoading = false;
-      state.error = '';
-    });
-    builder.addCase(deleteProduct.pending, pendingHandlerAuth);
-    builder.addCase(deleteProduct.rejected, rejectedHandler);
-    builder.addCase(deleteProduct.fulfilled, (state, action) => {
-      state.userSummary.daySummary = action.payload.newDaySummary;
-      state.isLoading = false;
-      state.error = '';
-    });
+    builder
+      .addCase(calculateDailyRate.fulfilled, calculateDailyRateFulfilled)
+      .addCase(calculateDailyRateForSignUser.fulfilled, calculateDailyRateForSignUserFulfilled)
+      .addCase(getCurrentUser.fulfilled, getCurrentUserFulfilled)
+      .addCase(getInfoDay.fulfilled, getInfoDayFulfilled)
+      .addCase(addProduct.fulfilled, addProductFulfilled)
+      .addCase(deleteProduct.fulfilled, deleteProductFulfilled)
+      .addMatcher(isAnyOf(...fn(defaultStatus.pending)), handlePending)
+      .addMatcher(isAnyOf(...fn(defaultStatus.rejected)), handleRejected);
   },
 });
+
 export const { modalOpen, modalClose, setDataCalendar } = userDataSlice.actions;
 export const userDataReducer = userDataSlice.reducer;

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useIsMobile, useIsTabletOrDesktop } from 'hooks/mediaQuery';
 import { correctDateForAddOperation } from 'utility/auxiliaryFunctions';
-import { selectMobileFromAddProduct, selectProductSearch } from 'redux/products/productsSelectors';
-import { searchByQueryProduct } from 'redux/products/productsOperation';
+import { selectMobileFromAddProduct, selectProductSearch } from 'redux/products/productSelectors';
+import { searchByQueryProduct } from 'redux/products/productOperation';
 import { selectDataCalendar } from 'redux/userData/userDataSelectors';
 import { addProduct } from 'redux/userData/userDataOperation';
 import btnPlus from 'assets/sprite.svg';
